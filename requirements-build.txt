@@ -1,0 +1,9 @@
+invoke
+rellu
+twine
+wheel
+docutils
+pygments
+
+# Include other dev dependencies from requirements-dev.txt.
+-r requirements-dev.txt
