@@ -1,10 +1,13 @@
 import os
-from typing import Tuple
+from os.path import dirname, abspath
 
 from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
+
+
+CURRENT_DIR = dirname(abspath(__file__))
 
 PRIVATE_KEY_FILE_NAME = "testdata/asymmetric/private_key.pem"
 PUBLIC_KEY_FILE_NAME = "testdata/asymmetric/public_key.pem"
@@ -32,17 +35,17 @@ def generate_asymmetric_keys() -> None:
         encryption_algorithm=serialization.NoEncryption()
     )
 
-    _write(_pem, PRIVATE_KEY_FILE_NAME)
+    _write(_pem, os.path.join(CURRENT_DIR, PRIVATE_KEY_FILE_NAME))
 
     _pem = public_key.public_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PublicFormat.SubjectPublicKeyInfo
     )
-    _write(_pem, PUBLIC_KEY_FILE_NAME)
+    _write(_pem, os.path.join(CURRENT_DIR, PUBLIC_KEY_FILE_NAME))
 
 
 def generate_symmetric_key() -> None:
-    _write(Fernet.generate_key(), SYMMETRIC_KEY_FILE_NAME)
+    _write(Fernet.generate_key(), os.path.join(CURRENT_DIR, SYMMETRIC_KEY_FILE_NAME))
 
 
 if __name__ == '__main__':
